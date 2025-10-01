@@ -21,6 +21,18 @@ mongoose
 // load the dataabase models we want to deal with
 const { Message } = require('./models/Message')
 const { User } = require('./models/User')
+const { About } = require('./models/About')
+
+// fetches from about collection
+app.get('/about', async (_req, res) => {
+  try {
+    const about = await About.findOne({});
+    res.json({ about: about || null, status: about ? 'all good' : 'not found' });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: err, status: 'failed to retrieve about' });
+  }
+});
 
 // a route to handle fetching all messages
 app.get('/messages', async (req, res) => {
